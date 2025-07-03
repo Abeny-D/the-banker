@@ -1,0 +1,104 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.activePlayer {
+    border: 3px solid #6fdc6f;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 0.5rem;
+    box-shadow: 0.3rem 0.1rem 1rem #6fdc6f;
+}
+
+.gameHeader {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.startShuffleBank {
+    display: flex;
+    justify-content: center;
+    gap: 10rem;
+    padding: 1rem;
+
+}
+.startShuffleBank h3{
+
+    border-bottom: 1px solid #6fdc6f;
+}
+
+.randomStatus {
+    display: flex;
+    justify-content: center;
+    gap: 10rem;
+    padding: 1rem;
+}
+
+.bottomHalfItems {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    justify-items: center;
+}
+
+.amountBet {
+    grid-column-start: 2;
+    grid-row-start: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.turnPass {
+
+    grid-column-start: 2;
+    grid-row-start: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+
+}
+
+#playerDetails {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    margin: 1rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+}
+
+input{
+    font-size: 1rem;
+    text-align: center;
+}
+
+button:hover {
+    cursor: pointer;
+    color: #ffffff;
+    background-color: #131313;
+}
+
+button{
+    font-size: 1rem;
+    text-align: center;
+    border-radius: 0.5rem;
+}
+
+
+
+
+
+
+
+/*.MakeTheCardBlurry p{*/
+/*color: white;*/
+/*}*/

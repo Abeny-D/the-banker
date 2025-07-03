@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-image: url("../assets/gameBg.jpg");
+    color: white;
+}
+
+.playerContainer{
+    display: flex;
+    gap: 4rem;
+
+}
+
+.gameFlow{
+    backdrop-filter: blur(10px);
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+
+button {
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+}
+
+.playerCard{
+    border: 1.5px solid white;
+    border-radius: 0.2rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
+}
+
+
