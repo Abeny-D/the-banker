@@ -4,8 +4,6 @@ import getCardValue from "./getCardValue";
 import {createDeck, shuffleDeck} from "./shuffleCreateCard";
 import DeckContainer from "./deckContainer";
 import {motion} from 'framer-motion';
-import playersList from "./playersList";
-import PlayersNames from "./playersList";
 
 
 // const playersNames = ["Hena", "Aman", "Kidus", "Ezi"];
@@ -20,6 +18,7 @@ function GameFlow() {
     const [roundTurn, setRoundTurn] = useState(0);
     const [randomCardAnimation, setRandomCardAnimation] = useState(false);
 
+
     function createPlayers(players: string[]) {
         const deck = shuffleDeck(createDeck());
         const newPlayers = [];
@@ -28,7 +27,7 @@ function GameFlow() {
             const name = players[i];
             const hand = [deck.pop(), deck.pop()];
             const coins = 500;
-            newPlayers.push({name, hand, bet: coins});
+            newPlayers.push({id: i, name, hand, bet: coins});
         }
 
         // return newPlayers;
@@ -44,8 +43,6 @@ function GameFlow() {
         while (playerNameInput.length < 4) {
             const newPlayerName = window.prompt(`Please enter player ${playerNameInput.length + 1}`)
 
-            console.log('newPlayerName --- ', newPlayerName);
-
             if (newPlayerName === null) {
                 break;
             }
@@ -56,9 +53,6 @@ function GameFlow() {
 
             playerNameInput.push(newPlayerName);
         }
-
-        console.log('playerNameInput', playerNameInput);
-
 
         if (playerNameInput.length < 4) {
             return;
@@ -80,7 +74,7 @@ function GameFlow() {
             ...player,
             hand: [deck.pop(), deck.pop()],
         }));
-        setPlayers(updatedPlayers);
+        // setPlayers(updatedPlayers);
         setRandomCard((prev) => prev || null);
         setWonLossStatus("All players received new cards!");
     }
@@ -98,7 +92,7 @@ function GameFlow() {
         }
     }
 
-    function bet() {
+    function bet2() {
         if (players.length === 0 || currentBet <= 0) return;
 
         const updatedPlayers = [...players];
@@ -150,6 +144,142 @@ function GameFlow() {
         setTimeout(() => {
             nextTurn();
             setPlayers(updatedPlayers);
+        }, 2000);
+
+
+        setCurrentBet(currentBet);
+    }
+
+    function bet() {
+        if (players.length === 0 || currentBet <= 0) return;
+
+        const updatedPlayers = [...players];
+        const currentPlayer = updatedPlayers[currentPlayerIndex];
+
+        const playersBets : { idx: number, betAmount: number, hand: [string, string] }[] = [];
+
+        playersBets.push({
+            idx: currentPlayerIndex,
+            betAmount: currentBet,
+            hand: currentPlayer.hand,
+        })
+
+        let tempBankAmount = bankAmount - currentBet;
+        let nxtPlayerIndex = currentPlayerIndex + 1;
+
+        while (nxtPlayerIndex < players.length && tempBankAmount > 0) {
+            const nextPlayerBet = window.prompt(`Enter your bet amount Player ${nxtPlayerIndex + 1} (${players[nxtPlayerIndex]?.name})`);
+
+            if (nextPlayerBet === null) {
+                nxtPlayerIndex += 1;
+
+                continue;
+            }
+
+            const currentPlayer = players[nxtPlayerIndex];
+
+            console.log('curret player --- :', currentPlayer);
+
+            if (parseInt(nextPlayerBet) > currentPlayer.bet) {
+                setWonLossStatus(`${currentPlayer.name} tried to bet more than they have.`);
+
+                continue;
+            }
+
+            if (parseInt(nextPlayerBet) > tempBankAmount) {
+                setWonLossStatus(`Bank doesn't have enough coins. Max allowed: ${tempBankAmount}`);
+
+                continue;
+            }
+
+            const betAmount = parseInt(nextPlayerBet);
+
+            playersBets.push({
+                idx: nxtPlayerIndex,
+                betAmount: betAmount,
+                hand: currentPlayer.hand,
+            })
+
+            nxtPlayerIndex += 1;
+            tempBankAmount -= 0;
+        }
+
+        console.log('playersBets --- : ', playersBets)
+
+
+        const deck = shuffleDeck(createDeck());
+        const card = deck.pop();
+        setRandomCard(card);
+
+        const [card1, card2] = currentPlayer.hand;
+        const val1 = getCardValue(card1);
+        const val2 = getCardValue(card2);
+        const valRand = getCardValue(card);
+
+        const isBetween =
+            (valRand > val1 && valRand < val2) || (valRand < val1 && valRand > val2);
+
+
+        let tempBank2 = bankAmount;
+        let tempPlayers = [...players];
+        playersBets.forEach((bets) => {
+
+            console.log('bets : ', bets)
+
+            if (isBetween) {
+                // currentPlayer.bet += currentBet;
+                // setBankAmount((prev) => prev - currentBet);
+
+                tempPlayers = tempPlayers.map(prev => {
+                    if(prev.id === bets.idx) {
+                        return {
+                            ...prev,
+                            bet: prev.bet + bets.betAmount
+                        }
+                    }
+                    return prev;
+                })
+
+                tempBank2 -= bets.betAmount;
+
+                // setWonLossStatus(`${currentPlayer.name} WON! +${currentBet} coins.`);
+
+
+            } else {
+
+                tempPlayers = tempPlayers.map(prev => {
+                    if(prev.id === bets.idx) {
+                        console.log('prev : ', prev)
+
+                        return {
+                            ...prev,
+                            bet: prev.bet - bets.betAmount
+                        }
+                    }
+                    return prev;
+                })
+
+                tempBank2 += bets.betAmount;
+                // setWonLossStatus(`${currentPlayer.name} LOST! -${currentBet} coins.`);
+
+            }
+
+        })
+
+        console.log('temp player ; ',  tempPlayers, tempBank2)
+        setBankAmount(tempBank2);
+        setPlayers(tempPlayers)
+
+
+        setRandomCardAnimation(!randomCardAnimation);
+        setTimeout(() => {
+            setRandomCardAnimation(false);
+        }, 2000);
+
+
+        setTimeout(() => {
+            nextTurn();
+            // setPlayers(updatedPlayers);
         }, 2000);
 
 
