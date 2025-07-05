@@ -43,6 +43,7 @@
     justify-items: center;
 }
 
+
 .amountBet {
     grid-column-start: 2;
     grid-row-start: 1;

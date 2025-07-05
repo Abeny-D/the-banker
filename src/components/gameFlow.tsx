@@ -6,8 +6,6 @@ import DeckContainer from "./deckContainer";
 import {motion} from 'framer-motion';
 
 
-// const playersNames = ["Hena", "Aman", "Kidus", "Ezi"];
-
 function GameFlow() {
     const [players, setPlayers] = useState([]);
     const [randomCard, setRandomCard] = useState(null);
@@ -41,7 +39,7 @@ function GameFlow() {
         const playerNameInput: string[] = [];
 
         while (playerNameInput.length < 4) {
-            const newPlayerName = window.prompt(`Please enter player ${playerNameInput.length + 1}`)
+            const newPlayerName = prompt(`Please enter player ${playerNameInput.length + 1}`)
 
             if (newPlayerName === null) {
                 break;
@@ -168,7 +166,16 @@ function GameFlow() {
         let nxtPlayerIndex = currentPlayerIndex + 1;
 
         while (nxtPlayerIndex < players.length && tempBankAmount > 0) {
-            const nextPlayerBet = window.prompt(`Enter your bet amount Player ${nxtPlayerIndex + 1} (${players[nxtPlayerIndex]?.name})`);
+            const nextPlayerBet = prompt(`Enter your bet amount Player ${nxtPlayerIndex + 1} (${players[nxtPlayerIndex]?.name})`);
+
+            let newInput :number = Number(nextPlayerBet)
+
+            if (isNaN(newInput)) {
+                 alert("please enter a number only")
+
+                 continue;
+             }
+
 
             if (nextPlayerBet === null) {
                 nxtPlayerIndex += 1;
@@ -233,8 +240,7 @@ function GameFlow() {
                 tempPlayers = tempPlayers.map(prev => {
                     if(prev.id === bets.idx) {
                         return {
-                            ...prev,
-                            bet: prev.bet + bets.betAmount
+                            ...prev, bet: prev.bet + bets.betAmount
                         }
                     }
                     return prev;
@@ -355,7 +361,7 @@ function GameFlow() {
                                     disabled={players.length === 0}
                                 />
                             </label>
-                            <button onClick={bet} disabled={players.length === 0 || currentBet <= 0}>
+                            <button onClick={bet2} disabled={players.length === 0 || currentBet <= 0}>
                                 Bet
                             </button>
                         </div>
