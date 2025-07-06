@@ -72,7 +72,7 @@ function GameFlow() {
             ...player,
             hand: [deck.pop(), deck.pop()],
         }));
-        // setPlayers(updatedPlayers);
+        setPlayers(updatedPlayers);
         setRandomCard((prev) => prev || null);
         setWonLossStatus("All players received new cards!");
     }
@@ -289,7 +289,7 @@ function GameFlow() {
         }, 2000);
 
 
-        setCurrentBet(currentBet);
+        setCurrentBet(50);
     }
 
     function passTurn() {
@@ -361,7 +361,7 @@ function GameFlow() {
                                     disabled={players.length === 0}
                                 />
                             </label>
-                            <button onClick={bet2} disabled={players.length === 0 || currentBet <= 0}>
+                            <button onClick={bet} disabled={players.length === 0 || currentBet <= 0}>
                                 Bet
                             </button>
                         </div>
