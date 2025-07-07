@@ -18,14 +18,14 @@ function GameFlow() {
 
 
     function createPlayers(players: string[]) {
-        const deck = shuffleDeck(createDeck());
-        const newPlayers = [];
+        const deck :any = shuffleDeck(createDeck());
+        const newPlayers :any = [];
 
         for (let i = 0; i < 4; i++) {
             const name = players[i];
             const hand = [deck.pop(), deck.pop()];
             const coins = 500;
-            newPlayers.push({id: i, name, hand, bet: coins});
+            newPlayers.push({id: i, name: name, hand: hand, bet: coins});
         }
 
         // return newPlayers;
@@ -168,9 +168,9 @@ function GameFlow() {
         while (nxtPlayerIndex < players.length && tempBankAmount > 0) {
             const nextPlayerBet = prompt(`Enter your bet amount Player ${nxtPlayerIndex + 1} (${players[nxtPlayerIndex]?.name})`);
 
-            let newInput :number = Number(nextPlayerBet)
+            let betInput :number = Number(nextPlayerBet)
 
-            if (isNaN(newInput)) {
+            if (isNaN(betInput)) {
                  alert("please enter a number only")
 
                  continue;
@@ -185,7 +185,6 @@ function GameFlow() {
 
             const currentPlayer = players[nxtPlayerIndex];
 
-            console.log('curret player --- :', currentPlayer);
 
             if (parseInt(nextPlayerBet) > currentPlayer.bet) {
                 setWonLossStatus(`${currentPlayer.name} tried to bet more than they have.`);
@@ -210,8 +209,6 @@ function GameFlow() {
             nxtPlayerIndex += 1;
             tempBankAmount -= 0;
         }
-
-        console.log('playersBets --- : ', playersBets)
 
 
         const deck = shuffleDeck(createDeck());
