@@ -11,18 +11,18 @@ function App() {
 
 
   return ( <div>
-<NextTurn />
+{/*<NextTurn />*/}
       {/*<PlayersNames />*/}
 {/*<DeckContainer />*/}
-{/*      <Router>*/}
+      <Router>
 
-{/*          <Routes>*/}
-{/*              <Route path="/" element={<MainPage/>}/>*/}
-{/*              <Route path="/join_createRoom" element={<JoinCreateRoom/>}/>*/}
-{/*              <Route path="/gameFlow" element={<GameFlow/>}/>*/}
-{/*              <Route path="/playersName" element={<PlayersNames/>}/>*/}
-{/*          </Routes>*/}
-{/*      </Router>*/}
+          <Routes>
+              <Route path="/" element={<MainPage/>}/>
+              <Route path="/join_createRoom" element={<JoinCreateRoom/>}/>
+              <Route path="/gameFlow" element={<GameFlow/>}/>
+              <Route path="/playersName" element={<PlayersNames/>}/>
+          </Routes>
+      </Router>
 
 
   </div> )
